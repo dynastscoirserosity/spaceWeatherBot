@@ -11,16 +11,16 @@ from bs4 import BeautifulSoup
 
 # twitter api v2 authentication
 v2_api = tweepy.Client(
-    consumer_key = 'D8rn4Fl7TixzZoL3N443hWxlp',
-    consumer_secret = 'kVqLj0HlcxTJZOX6NX706jluDaFoRfzyR9iiHG6C3Qu0M2ACKR',
-    access_token = '1654139942505963521-Jyc252vnXF3XUb6AL6YVdVdUIJGLcD',
-    access_token_secret = '4ts9Yq4eV7zUp789MRqOfgqp9f3wHRo2yzE78cp6Kcd4q'
+    consumer_key = 'your key goes here',
+    consumer_secret = 'your key goes here',
+    access_token = 'your key goes here',
+    access_token_secret = 'your key goes here'
 )
 
 # twitter api v1.1 authentication
 v1_auth = tweepy.OAuth1UserHandler(
-   'D8rn4Fl7TixzZoL3N443hWxlp', 'kVqLj0HlcxTJZOX6NX706jluDaFoRfzyR9iiHG6C3Qu0M2ACKR',
-   '1654139942505963521-Jyc252vnXF3XUb6AL6YVdVdUIJGLcD', '4ts9Yq4eV7zUp789MRqOfgqp9f3wHRo2yzE78cp6Kcd4q'
+   'your key goes here', 'your key goes here',
+   'your key goes here', 'your key goes here'
 )
 
 v1_api = tweepy.API(v1_auth)
@@ -48,7 +48,6 @@ if 'LaunchFAQ.pdf' in find_section[len(find_section) - 1]:
 
 if find_section == []:
     tweet_text = header + '\nThere are no weather forecasts listed at the moment.'
-    print(tweet_text)
 else:
     list_of_links = []
     list_of_names = []
@@ -65,9 +64,6 @@ else:
         formatted_link = each.replace(' ', '%20')
         full_link = 'https://www.patrick.spaceforce.mil' + formatted_link
         list_of_links.append(full_link)
-
-    print(list_of_links)
-    print(list_of_names)
 
     max_links = len(list_of_links)
 
@@ -150,13 +146,11 @@ else:
                         print(second_launch_op)
 
             tweet_text = header + '\n== ' + str(list_of_names[index].upper()) + ' ==\nIssued:\n' + str(issued_date) + '\n\nValid:\n' + str(valid_date) + '\n\nViolation Probability:\n' + first_launch_op + '%\n\nViolation Probability (24h Delay):\n' + second_launch_op + '%'
-            print(tweet_text)
 
-            #print(len(tweet_text))
-            #upload = v1_api.media_upload(str(list_of_names[index]) + '.jpg')
-            #v2_api.create_tweet(text = tweet_text, media_ids = [str(upload.media_id)])
+            upload = v1_api.media_upload(str(list_of_names[index]) + '.jpg')
+            v2_api.create_tweet(text = tweet_text, media_ids = [str(upload.media_id)])
 
-        #os.remove(current_file_name + '.txt')
+        os.remove(current_file_name + '.txt')
         os.remove(current_file_name + '.jpg')
 
         index += 1
